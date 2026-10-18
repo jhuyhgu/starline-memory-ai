@@ -35,13 +35,13 @@ The prototype focuses on an individual worker's own notes. It does not assume ac
 
 ## Meaningful use of Google AI
 
-The organizing step converts free-form text into a reviewable record rather than merely generating a chat reply. The question step uses only the records the user selected for that request. The server validates returned quotation text and citation identifiers against the supplied material. These checks can reject invalid evidence; they do not prove that every generated statement is correct, so source inspection and user review remain part of the workflow.
+The organizing step converts free-form text into a reviewable record rather than merely generating a chat reply. The question step uses only the records the user selected for that request. Supported answers use verbatim excerpts: each answer line must come from a citation quote validated against the supplied original text or field values. Unsupported or unverifiable answers return a not-found result. These checks do not prove that the underlying record is true or that an excerpt has been interpreted correctly, so source inspection and user review remain part of the workflow.
 
 The deployed model name must be taken from the live service response. Do not describe a successful live Gemini run until it has actually been observed.
 
 ## Technical approach
 
-The isolated prototype uses a vanilla JavaScript client and a Node.js service. One Google Cloud Run service serves the client and the same-origin JSON API. The server uses Google's Gemini SDK, preferring Vertex AI with Application Default Credentials for deployment. Credentials stay on the server. The application does not persist submitted note text on the server or intentionally log request bodies.
+The isolated prototype uses a vanilla JavaScript client and a Node.js service. The intended deployment uses one Google Cloud Run service for the client and the same-origin JSON API. The server uses Google's Gemini SDK, preferring Vertex AI with Application Default Credentials for deployment. Credentials stay on the server. The application does not persist submitted note text on the server or intentionally log request bodies.
 
 Saved records are encrypted in the browser using WebCrypto AES-GCM and stored in IndexedDB. The non-extractable key is also persisted in that browser's IndexedDB. This is local browser encryption: it is not an account-backed cloud vault, a password-unlock system, cross-device synchronization or a claim of end-to-end cloud encryption. Code running with the same origin, or someone with access to the open browser workspace, can still access the records through the application.
 

@@ -61,7 +61,7 @@ One Node.js service serves `public/` and three same-origin endpoints. Google Gem
 | `POST /api/organize` | Receives `{text, language}` with 2–6,000 text characters and language `en` or `zh`; returns an editable memory draft with source quotes |
 | `POST /api/ask` | Receives a question up to 1,000 characters and at most 12 selected records, with at most 24,000 combined characters of original text, titles and fields |
 
-Organized field/date quotes must occur in the submitted note. Answer citations must reference supplied record IDs and quote supplied original text or fields. Invalid model output is rejected rather than treated as a successful response. Validation checks citation membership and quotation text; it does not establish that every interpretation or generated sentence is correct.
+Organized field/date quotes must occur in the submitted note. Answers are deliberately extractive: every nonempty answer line must be a verbatim excerpt from a valid citation quote. Citations must reference supplied record IDs and quote their original text or field values; field labels alone are not evidence. Unsupported or unverifiable answers return a not-found result. These checks do not establish that the underlying record is true or that an excerpt has been interpreted correctly.
 
 The shared interface and ownership boundaries are defined in [CONTRACT.md](CONTRACT.md). Error bodies use `{error:{code,message}}` with request, size, rate-limit or availability status codes. The public prototype requires request limits and rate/concurrency controls; production authentication and distributed quota enforcement are outside this prototype's scope.
 
@@ -95,9 +95,11 @@ Frontend vault and interaction-state checks only:
 node --test tests/frontend*.test.mjs
 ```
 
-These commands describe the repository's test entry points, not a claim that this documentation task ran them. Backend tests use controlled model responses for deterministic bounds, evidence-validation and error paths. They do not establish that production credentials, the real Google model or a public deployment work. The final browser walkthrough must independently verify real organization, explicit save/cancel, consent, citations and failure recovery.
+On 18 October 2026, `npm test` passed 43 tests: 22 backend, 10 frontend and 11 deployment-helper checks. Backend tests use controlled model responses for deterministic bounds, evidence-validation and error paths. They do not establish that production credentials, the real Google model or a public deployment work. The final browser walkthrough must independently verify real organization, explicit save/cancel, consent, citations and failure recovery.
 
 ## Google Cloud deployment
+
+Use the [deployment and live-verification guide](docs/cloud-run-deployment.md) for the offline plan, read-only prerequisites, isolated source upload and four real-model smoke cases. The helper does not enable billing or create service-account keys.
 
 Deploy the isolated directory as one Cloud Run service using the included Dockerfile. It uses Node.js 22, installs the locked production dependencies, copies only the server and static client, and runs as the non-root `node` user. The service listens on the platform's `PORT` at `0.0.0.0`, serves client and API from the same public origin, and must remain reachable throughout evaluation. Root-owned deployment scripts and the final service URL belong to the release evidence, not to an invented example link.
 

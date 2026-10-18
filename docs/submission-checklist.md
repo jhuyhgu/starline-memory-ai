@@ -20,6 +20,7 @@ The themes page also contains a category list that differs from its six theme he
 | Package scope | Only the new isolated `memory-cup/` prototype |
 | Proposed hosting | Google Cloud Run |
 | AI provider | Google Gemini |
+| Public source | https://github.com/jhuyhgu/starline-memory-ai |
 | Project description | `project-description.md` |
 | Video shot plan | `demo-script.md`, target 2:45 |
 | Pitch source text | `pitch-content.md`; must be transferred into the official template |
@@ -38,9 +39,9 @@ An empty value below is intentional. It is not a usable link or a claim of compl
 | Google Cloud project and deployment region | Not supplied | Root agent's actual deployment |
 | Authentication method and enabled model | Not verified | Deployed server configuration and successful live request; no secret values in this file |
 | Public prototype URL | Not supplied | Successful Google Cloud deployment and unauthenticated browser check |
-| Public GitHub repository URL | Not supplied | Root publication of isolated prototype only |
-| Commit/build used in demo and final tests | Not supplied | Exact public-repository commit or reproducible build receipt |
-| Actual backend/frontend test results | Not verified by this document | Saved command output from this build |
+| Public GitHub repository URL | Published and public visibility verified on 18 October | https://github.com/jhuyhgu/starline-memory-ai; isolated prototype only |
+| Commit/build used in demo and final tests | Initial public source commit `7e8a115`; final demo build still pending | Reconfirm the exact commit after final live verification |
+| Actual automated test results | 43 passed, 0 failed, 0 skipped on 18 October | `npm test`; includes 22 backend, 10 frontend and 11 deployment-helper tests; controlled responses do not prove a live model call |
 | Real organize and cited-answer walkthrough | Pending credentials and running implementation | Actual Google model interaction and original-record citation check |
 | Public video URL and final duration | Not supplied | Final upload with playback checked without a private session; duration <180 seconds |
 | Final pitch PDF in official template | Not produced | Filled organizer template, rendered inspection and actual PDF file |
