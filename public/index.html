@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f8f9fb">
+  <meta name="description" content="Capture a note, organize it with Google Gemini, and find answers in memories you choose to share. Saved memories are encrypted in this browser.">
+  <title>Starline Memory</title>
+  <link rel="icon" type="image/png" href="/starline-logo.png">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to workspace</a>
+  <div class="app-shell">
+    <aside class="library" aria-label="Local memories">
+      <a class="brand" href="/" aria-label="Starline Memory home"><img src="/starline-logo.png" alt="" width="34" height="34"><span>Starline <strong>Memory</strong></span></a>
+      <button class="button primary new-button" id="new-memory"><img src="/icons/add.svg" class="icon invert" alt="">New memory</button>
+      <div class="library-heading"><h2>Your memories <span id="memory-count">0</span></h2><button class="text-button" id="clear-selection" hidden>Clear selection</button></div>
+      <label class="search-label"><span class="sr-only">Search local memories</span><input type="search" id="memory-search" placeholder="Search this browser…" autocomplete="off"></label>
+      <p class="selection-hint" id="selection-hint">Select memories to ask a question.</p>
+      <div class="memory-list" id="memory-list" aria-live="polite"></div>
+      <div class="library-bottom">
+        <button class="button quiet full-width" id="export-memories" disabled>Export memories</button>
+        <div class="vault-note"><img src="/icons/secure.svg" class="icon" alt=""><p><strong>Saved in this browser</strong><span>AES-GCM encrypted. No cloud sync.</span></p></div>
+        <button class="text-button privacy-button" id="privacy-details">How your data is used</button>
+      </div>
+    </aside>
+
+    <main class="workspace" id="workspace">
+      <header class="workspace-header"><div><h1>Memory workspace</h1><p>A place for the things you want to remember.</p></div><div class="ai-status" id="ai-status" role="status"><span class="status-dot"></span><span>Checking Gemini…</span></div></header>
+      <div class="workspace-nav" role="tablist" aria-label="Workspace"><button class="workspace-tab active" id="capture-tab" role="tab" aria-controls="capture-workspace" aria-selected="true"><img src="/icons/memory.svg" class="icon" alt="">Capture & review</button><button class="workspace-tab" id="ask-tab" role="tab" aria-controls="ask-workspace" aria-selected="false"><img src="/icons/organize.svg" class="icon" alt="">Ask my memories <span id="selected-count">0</span></button></div>
+      <div class="notice error" id="vault-error" role="alert" hidden></div>
+      <div class="toast" id="toast" role="status" hidden></div>
+
+      <section id="capture-workspace" role="tabpanel" aria-labelledby="capture-tab">
+        <div class="capture-grid">
+          <section class="panel capture-panel" aria-labelledby="capture-heading">
+            <div class="panel-heading"><div><span class="step-number">01</span><h2 id="capture-heading">Capture a thought</h2></div><span class="muted small">Text first. Details next.</span></div>
+            <label class="note-label" for="capture-text">What would you like to remember?</label>
+            <textarea id="capture-text" maxlength="6000" placeholder="An appointment, a useful message, a warranty detail… write or paste it here."></textarea>
+            <div class="input-meta"><span>Only this note is sent when you choose Gemini.</span><span id="character-count">0 / 6,000</span></div>
+            <div class="capture-actions"><button class="button primary" id="organize-button"><img class="icon invert" src="/icons/organize.svg" alt="">Organize with Gemini</button><button class="button quiet" id="manual-button">Review manually</button></div>
+            <div class="notice error" id="capture-error" role="alert" hidden></div>
+            <button class="sample-button" id="sample-button"><span class="sample-symbol" aria-hidden="true">Aa</span><span><strong>Try a fictional note</strong><span>A made-up work handoff. Nothing is added to your vault.</span></span><span aria-hidden="true">→</span></button>
+            <p class="local-boundary">Gemini suggestions are editable and never save automatically. Unsaved drafts are lost if this tab closes or reloads.</p>
+          </section>
+          <section class="panel review-panel" aria-labelledby="review-heading">
+            <div class="panel-heading"><div><span class="step-number">02</span><h2 id="review-heading">Review before saving</h2></div><span class="review-state" id="review-state">Waiting for a note</span></div>
+            <div id="review-empty" class="empty-review"><img src="/icons/memory.svg" alt="" width="54" height="54"><h3>Keep the useful details.</h3><p>Organize a note with Gemini, or review it manually. You decide what becomes a memory.</p><ul><li>Check facts against the original</li><li>Edit anything that needs a change</li><li>Confirm dates before keeping them</li></ul></div>
+            <form id="review-form" hidden>
+              <label>Title<input id="review-title" maxlength="120" required></label>
+              <div class="form-row"><label>Category<input id="review-category" maxlength="80"></label><label>Tags <span class="muted">comma-separated</span><input id="review-tags" maxlength="720"></label></div>
+              <label>Summary<textarea id="review-summary" rows="2" maxlength="1200"></textarea></label>
+              <div class="review-section"><div class="section-label"><h3>Key details</h3><button class="text-button" id="add-field" type="button">Add a detail</button></div><div id="review-fields"></div></div>
+              <div class="review-section" id="review-dates-section" hidden><h3>Dates to confirm</h3><p class="muted small">Unchecked dates will not be saved. Check the source before confirming.</p><div id="review-dates"></div></div>
+              <details class="original-details"><summary>Original note</summary><pre id="review-original"></pre></details>
+              <p class="save-boundary"><img class="icon" src="/icons/secure.svg" alt="">Saved only in this browser, encrypted locally.</p>
+              <div class="review-actions"><button class="button primary" id="save-memory" type="submit">Save memory</button><button class="button quiet" id="cancel-draft" type="button">Cancel</button></div>
+              <div class="notice error" id="review-error" role="alert" hidden></div>
+            </form>
+          </section>
+        </div>
+        <section class="panel memory-detail" id="memory-detail" hidden aria-labelledby="detail-title"></section>
+      </section>
+
+      <section id="ask-workspace" role="tabpanel" aria-labelledby="ask-tab" hidden>
+        <div class="ask-grid">
+          <section class="panel question-panel"><div class="panel-heading"><div><h2>Find it in your memories</h2></div></div><p class="muted">Choose up to 12 memories in the library. Gemini can answer only from the records you send.</p><div class="selected-records" id="selected-records"></div><label for="ask-question">Your question</label><textarea id="ask-question" rows="4" maxlength="1000" placeholder="Who owns the onboarding checklist, and when is it due?"></textarea><label class="consent-control"><input id="ask-consent" type="checkbox"><span id="ask-consent-label">Send my selected memories and this question to Google Gemini for this request.</span></label><button class="button primary" id="ask-button"><img src="/icons/send.svg" class="icon invert" alt="">Ask Gemini</button><div class="notice error" id="ask-error" role="alert" hidden></div><p class="local-boundary">Your other saved records stay in this browser. This is a lookup over your records, not professional advice.</p></section>
+          <section class="panel answer-panel"><div class="panel-heading"><div><h2>Answer & sources</h2></div></div><div id="answer-empty" class="answer-empty"><img src="/icons/organize.svg" width="40" height="40" alt=""><h3>Answers you can trace.</h3><p>Every supported answer includes a source you can open. If a fact is missing, Gemini should say so.</p></div><div id="answer-result" hidden></div></section>
+        </div>
+      </section>
+      <footer class="workspace-footer"><span>Starline Memory</span><span>Google Gemini organizes. You stay in control.</span></footer>
+    </main>
+  </div>
+  <dialog id="source-dialog" class="source-dialog"><div class="dialog-top"><h2 id="source-title">Original memory</h2><button class="button quiet" id="close-source">Close</button></div><div id="source-content"></div></dialog>
+  <dialog id="privacy-dialog"><div class="dialog-top"><h2>Your data, step by step</h2><button class="button quiet" id="close-privacy">Close</button></div><div class="privacy-content"><h3>Capture</h3><p>Drafts stay in this tab. Choosing “Organize with Gemini” sends only the text currently in the capture box to our server and Google Gemini.</p><h3>Save</h3><p>Saved memories are encrypted using WebCrypto AES-GCM in this browser’s IndexedDB. The non-extractable key is stored in the same browser profile. This protects stored records, but is not a password lock or protection against someone using your unlocked browser.</p><h3>Ask</h3><p>Only records you select, together with your question, are sent after you give consent. The server does not store your notes or log request text.</p><h3>Export & delete</h3><p>Export downloads a readable JSON copy. Deleting a memory removes its encrypted record from this browser. Clearing browser data also removes the vault and its key. There is no cross-device sync or recovery service.</p></div></dialog>
+  <dialog id="export-dialog"><div class="dialog-top"><h2>Export your memories</h2><button class="button quiet" id="close-export">Cancel</button></div><p>This downloads a <strong>readable JSON file</strong> containing every saved memory. Anyone with the file can read it. Keep it somewhere you trust.</p><button class="button primary" id="confirm-export">Download readable copy</button></dialog>
+  <dialog id="confirmation-dialog" aria-labelledby="confirmation-title" aria-describedby="confirmation-message"><div class="dialog-top"><h2 id="confirmation-title">Confirm action</h2></div><p id="confirmation-message"></p><div class="dialog-actions"><button class="button quiet" id="confirmation-cancel" type="button" autofocus>Keep it</button><button class="button primary" id="confirmation-confirm" type="button">Confirm</button></div></dialog>
+  <noscript><p class="notice error">Starline Memory needs JavaScript to encrypt and save memories in this browser.</p></noscript>
+</body>
+</html>

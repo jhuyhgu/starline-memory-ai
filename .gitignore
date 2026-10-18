@@ -1,0 +1,28 @@
+# Local dependencies, generated output and editor files
+node_modules/
+coverage/
+dist/
+*.log
+.DS_Store
+*.swp
+
+# Local credentials and environment; keep only the public placeholder template
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.csr
+*.mobileprovision
+*service-account*.json
+*credentials*.json
+
+# Local databases and private exports
+*.sqlite
+*.sqlite3
+*.db
+exports/
+private/

@@ -1,0 +1,14 @@
+{
+  "name": "starline-memory-cup",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Isolated Starline Memory competition prototype with Google Gemini",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:backend": "node --test tests/backend*.test.mjs"
+  },
+  "dependencies": { "@google/genai": "2.30.0" }
+}
