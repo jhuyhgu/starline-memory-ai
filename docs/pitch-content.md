@@ -1,6 +1,6 @@
 # Starline Memory — content for the official pitch template
 
-This file supplies text only. **It is not a pitch deck, an organizer template or a finished PDF.** Preserve the organizer's actual slide order, headings and required fields when transferring this content. The root agent is obtaining that template; no substitute template should be presented as official.
+This file supplies text only. **It is not a pitch deck, an organizer template or a finished PDF.** Preserve the organizer's actual slide order, headings and required fields when transferring this content. The official template has been downloaded; no substitute template should be presented as official. The signed-in submission form requires the exported official-template PDF to be no larger than 5 MB.
 
 ## Cover / project identity
 
@@ -92,8 +92,8 @@ Fill only verified values from `submission-checklist.md`:
 
 - Public prototype URL
 - Public GitHub repository
-- Public demo video, under three minutes
-- Final official-template PDF
+- Public demo video, 3–4 minutes as required by the signed-in submission form
+- Final official-template PDF, no larger than 5 MB
 - Registered team information
 
 Do not show placeholder URLs in the exported deck. Remove draft-only instructions after the real template fields and assets are populated.

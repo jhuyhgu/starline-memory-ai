@@ -110,8 +110,10 @@ The runtime is stateless with respect to user notes. Current defaults permit thr
 ## Submission materials
 
 - [Project description](docs/project-description.md)
-- [Demo shot plan and narration, target 2:45](docs/demo-script.md)
+- [Demo shot plan and narration, target 3:15](docs/demo-script.md)
 - [Content to transfer into the official pitch template](docs/pitch-content.md)
 - [Required real links, team inputs and verification evidence](docs/submission-checklist.md)
 
-The proposed theme is **Future of Work & Enterprise Productivity**. The official [requirements](https://aibuildercup.com/themes.html) and [FAQs](https://aibuildercup.com/Faqs.html) govern the submission. The submitter must verify registered-team eligibility and project timing. No team member, metric, deployed URL, live-AI result or submission receipt is fabricated in these materials.
+The proposed theme is **Future of Work & Enterprise Productivity**. The actual signed-in submission form requires a **3–4 minute video**, a **brief of at most 1,024 characters**, and an **official-template pitch PDF no larger than 5 MB**. Its observed cutoff is **19 October 2026 at 02:29 CST, Asia/Shanghai (UTC+08:00)**. These specific form limits take precedence over conflicting older general FAQ wording. The implementation baseline is `882c5d9`; later documentation commits are tracked separately.
+
+The official [requirements](https://aibuildercup.com/themes.html) and [FAQs](https://aibuildercup.com/Faqs.html) also apply. The submitter's registered-team status and eligibility remain unconfirmed. SDK sign-in and ADC setup have succeeded, but billing is disabled on both available active projects; live Gemini verification, public deployment and the recorded video remain pending. No team member, metric, deployed URL, live-AI result or submission receipt is fabricated in these materials.

@@ -18,6 +18,10 @@ A personal work-memory workspace that turns notes into editable records and answ
 
 Starline Memory helps people recover decisions, commitments and context from their own work notes. Users explicitly send a note to Google Gemini, review the proposed structure and save an editable record in an encrypted local browser vault. They can then ask a question over selected records and inspect the quoted source behind an answer. Manual capture remains available when AI is unavailable.
 
+## Submission brief — maximum 1,024 characters
+
+Starline Memory is a work-memory prototype for capturing notes, reviewing facts and finding the original evidence. Its Google Gemini SDK integration is designed to turn a user-selected note into editable fields with verbatim quotes, then answer questions only from records the user selects and authorizes for that request. Supported answers must be exact excerpts from validated source quotes; unsupported results return not found. Saved records use WebCrypto AES-GCM in the browser's IndexedDB, with manual capture available when AI is unavailable. Local save, cancel, reload persistence and consent/error behavior have been checked; 43 automated tests pass. The isolated source is public. Live Gemini verification and the planned Google Cloud Run deployment remain pending billing activation. No private notes, credentials or existing app data are included.
+
 ## Problem
 
 A small but recurring part of knowledge work is remembering what was actually agreed: who owns a follow-up, which date was confirmed, or whether a decision is still pending. Those details often sit inside unstructured personal notes. Search can find words without making the underlying commitment clear, while an unsupported AI answer can make an uncertain detail sound settled.
@@ -63,4 +67,4 @@ This competition prototype is developed separately in `memory-cup/`. The existin
 
 ## Links
 
-The live prototype URL, public GitHub URL, public video URL and official-template pitch PDF are intentionally not invented here. Record verified values in `submission-checklist.md`, then paste the actual links into the competition form.
+Public source: [Starline Memory](https://github.com/jhuyhgu/starline-memory-ai), implementation baseline `882c5d9`. Later documentation commits do not change that implementation baseline. The live prototype URL, public video URL and completed official-template pitch PDF remain pending; record verified values in `submission-checklist.md` before pasting them into the form. The actual form requires a 3–4 minute video, a PDF no larger than 5 MB and a brief of at most 1,024 characters.
